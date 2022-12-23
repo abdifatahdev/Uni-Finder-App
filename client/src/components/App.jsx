@@ -2,19 +2,13 @@ import React, { useState } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import axios from "axios";
 import "./styles.css";
+import universitiesMap from "./universities";
 
 function App() {
   const [universityName, setUniversityName] = useState("");
 
   const submitHandler = (e) => {
     e.preventDefault();
-
-    const universitiesMap = new Map([
-      ["Oregon State University", "209542"],
-      ["Harvard University", "166027"],
-      ["University of Florida", "484473"],
-    ]);
-
     const universityId = universitiesMap.get(universityName);
     const APIKey = "weIg6spfiKIk0fC3wg5omar71jNfWG44FbgK5ghN";
     axios
