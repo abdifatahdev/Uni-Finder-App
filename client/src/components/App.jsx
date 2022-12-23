@@ -1,56 +1,58 @@
 import React, { useState } from "react";
-import { Container, Form, Button} from "react-bootstrap";
-// Form, Button, Col, Row, Spinner
-import axios from "axios"
-import './styles.css';
+import { Container, Form, Button } from "react-bootstrap";
+import axios from "axios";
+import "./styles.css";
 
 function App() {
+  const [universityName, setUniversityName] = useState("");
 
-    const [institutionId, setInstitutionId] = useState("")
+  const submitHandler = (e) => {
+    e.preventDefault();
 
-    const submitHandler = (e) => {
-        e.preventDefault();
-        let userData = {
-            institutionId: institutionId
-        };
-        const APIKey = "weIg6spfiKIk0fC3wg5omar71jNfWG44FbgK5ghN";
-        axios
-            .get(`https://api.data.gov/ed/collegescorecard/v1/schools.json?id=${institutionId}&fields=school.name,2020.student.size&api_key=${APIKey}`, JSON.stringify(userData), {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            })
-            .then((response) => {
-                if (response.status === 200) {
-                    console.log("successfully posted to the server!!");
-                } else {
-                    console.log("it wasn't successful");
-                }
-            })
-            .catch((err) => {
-                console.error(`Error: ${err}`);
-            });
-        console.log(JSON.stringify(userData));
-        // setInstitutionId("");
-    };
+    const universitiesMap = new Map([
+      ["Oregon State University", "209542"],
+      ["Harvard University", "166027"],
+      ["University of Florida", "484473"],
+    ]);
 
-    return (
-        <Container>
-        <div className="App">
-            <h1>University Finder App</h1>
-        </div>
-            <Form onSubmit={submitHandler}>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Type University Name</Form.Label>
-                    <Form.Control type="text" value={institutionId}
-                                  onChange={(e) => setInstitutionId(e.target.value)} />
-                </Form.Group>
-                <Button variant="primary" type="submit">
-                    Submit
-                </Button>
-            </Form>
-        </Container>
-    );
+    const universityId = universitiesMap.get(universityName);
+    const APIKey = "weIg6spfiKIk0fC3wg5omar71jNfWG44FbgK5ghN";
+    axios
+      .get(
+        `https://api.data.gov/ed/collegescorecard/v1/schools.json?id=${universityId}&fields=school.name,2020.student.size&api_key=${APIKey}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => console.log(JSON.stringify(response.data)))
+      .catch((err) => console.log(err));
+
+    setUniversityName("");
+  };
+
+  // render the form and display the school data if available
+  return (
+    <Container>
+      <div className="App">
+        <h1>University Finder App</h1>
+      </div>
+      <Form onSubmit={submitHandler}>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Type University Name</Form.Label>
+          <Form.Control
+            type="text"
+            value={universityName}
+            onChange={(e) => setUniversityName(e.target.value)}
+          />
+        </Form.Group>
+        <Button variant="primary" type="submit">
+          Submit
+        </Button>
+      </Form>
+    </Container>
+  );
 }
 
 export default App;
