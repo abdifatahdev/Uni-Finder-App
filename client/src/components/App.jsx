@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import { Container, Form, Button } from "react-bootstrap";
+import { Container, Form, Button, ListGroup } from "react-bootstrap";
 import axios from "axios";
 import "./styles.css";
 import universitiesMap from "./universities";
 import { useEffect } from "react";
+import { useDebounce } from "../hooks/debounceHooks";
 
 function App() {
   const [universities, setUniversities] = useState([]);
-  const [instituion, setInstituion] = useState('')
-  const [suggestions, setSuggestions] = useState([])
+  const [institution, setInstitution] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [noUniversityFound, setNoUniversityFound] = useState(false);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -27,43 +29,43 @@ function App() {
     //   .then((response) => console.log(JSON.stringify(response.data)))
     //   .catch((err) => console.log(err));
 
-    setInstituion('')
+    setInstitution("");
   };
 
   useEffect(() => {
-    setUniversities(loadAllUniversities())
-    loadAllUniversities()
-  }, []) 
+    setUniversities(loadAllUniversities());
+    loadAllUniversities();
+  }, []);
 
   const loadAllUniversities = () => {
-    const universitiesMap = new Map([
-      ["University of Houston", "225511"],
-      ["Oregon State University", "209542"],
-      ["University of Massachusetts-Boston", "166638"],
-      ["Harvard University", "166027"],
-      ["University of Florida", "484473"],
-      ["Florida State University", "484173"]
-    ]);
-    let universitiesList =[ ...universitiesMap.keys()];
-    return universitiesList
-  }
+    let universitiesList = [...universitiesMap.keys()];
+    return universitiesList;
+  };
 
-  const handleInstituionName = (userInput) => {
+  const handleInstitutionName = (userInput) => {
     let matches = [];
     console.log(userInput);
     if (userInput.length > 0) {
-      matches = universities.filter(uni => {
+      matches = universities.filter((uni) => {
         const regex = new RegExp(`${userInput}`, "gi");
         return uni.match(regex);
-      })
+      });
     }
-    console.log('matches: ', matches);
-    setSuggestions(matches);
-    setInstituion(userInput);
-    console.log(userInput);
-  }
+    if (matches) {
+      if (matches && matches.length === 0) {
+        setNoUniversityFound(true);
+      }
+      setSuggestions(matches);
+      setInstitution(userInput);
+    }
+  };
 
-  // render the form and display the school data if available
+  const notFound = !institution || institution.length === 0;
+
+  // It will prevent hitting API when user types every single character
+  // Wait 500 milliseconds until user finishes typing
+  useDebounce(universities, 500, handleInstitutionName);
+
   return (
     <Container>
       <div className="App">
@@ -74,9 +76,28 @@ function App() {
           <Form.Label>Type University Name</Form.Label>
           <Form.Control
             type="text"
-            value={instituion}
-            onChange={e => handleInstituionName(e.target.value)}
+            value={institution}
+            onChange={(e) => handleInstitutionName(e.target.value)}
           />
+
+          {suggestions &&
+            suggestions.map((suggestion, i) => (
+              <div key={i}>
+                <ListGroup>
+                  <ListGroup.Item>
+                    {/*{suggestion.length === 0*/}
+                    {/*  ? `No matches for ${userInput}`*/}
+                    {/*  : suggestion}*/}
+
+                    {notFound && !noUniversityFound && (
+                      <p className="notFound">No school or university found</p>
+                    )}
+
+                    {suggestion}
+                  </ListGroup.Item>
+                </ListGroup>
+              </div>
+            ))}
         </Form.Group>
         <Button variant="primary" type="submit">
           Submit
