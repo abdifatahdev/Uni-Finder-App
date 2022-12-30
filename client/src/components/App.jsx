@@ -85,14 +85,9 @@ function App() {
               <div key={i}>
                 <ListGroup>
                   <ListGroup.Item>
-                    {/*{suggestion.length === 0*/}
-                    {/*  ? `No matches for ${userInput}`*/}
-                    {/*  : suggestion}*/}
-
                     {notFound && !noUniversityFound && (
                       <p className="notFound">No school or university found</p>
                     )}
-
                     {suggestion}
                   </ListGroup.Item>
                 </ListGroup>
