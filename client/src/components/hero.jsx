@@ -1,4 +1,3 @@
-import { Button } from "react-bootstrap";
 import "./styles.css";
 
 export default function Hero() {
@@ -11,7 +10,6 @@ export default function Hero() {
                             Find the best college the fits you and your learning style
                         </h1>
                         <p>Take control of your education right now!</p>
-                        <Button className="cta-button">Take Action now</Button>
                     </div>
                 </div>
             </div>
