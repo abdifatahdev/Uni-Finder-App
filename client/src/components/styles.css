@@ -51,9 +51,12 @@ body {
 }
 
 .form-btn:hover {
-    background-color: #003f88;
-    color: #fff;
-    border-color: #003f88;
+    /*background-color: #003f88;*/
+    /*color: #fff;*/
+    /*border-color: #003f88;*/
+    background-color: #FDC402;
+    color: #000;
+    border-color: #FDC402;
 }
 
 .form-btn:active {
@@ -73,4 +76,21 @@ body {
     width: 100px;
     margin-top: 17em;
     margin-right: 5em;
+}
+
+.form{
+   margin-bottom: 50px;
+}
+#demo-row-radio-buttons-group-label{
+    margin-top: 20px;
+}
+
+.toast-message{
+    width: 24vw;
+    margin-left: -80px;
+    padding: 20px 20px;
+}
+
+.toast-position{
+
 }
