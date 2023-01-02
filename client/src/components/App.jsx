@@ -9,6 +9,7 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
+  Input,
 } from "@mui/material";
 import { Button, Col, Container, Form, FormLabel, Row } from "react-bootstrap";
 import axios from "axios";
@@ -20,9 +21,12 @@ let universitiesList = [...universitiesMap.keys()];
 
 export default function App() {
   const [institution, setInstitution] = useState(universitiesList[0]);
-  const [transfer, setTransfer] = useState("");
-  const [satScores, setSatScores] = useState(null);
-  console.log({ satScores });
+  const [isTransfer, setIsTransfer] = useState("");
+  const [gpa, setGpa] = useState();
+  const [reading, setReading] = useState();
+  const [math, setMath] = useState();
+  const [writing, setWriting] = useState();
+  const [isStudentTransfer, setIsStudentTransfer] = useState(false);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -46,32 +50,28 @@ export default function App() {
         )
         .then((response) => console.log(JSON.stringify(response.data)))
         .catch((err) => console.log(err));
-    } else {
+    } else if (
+      reading === undefined &&
+      math === undefined &&
+      writing === undefined
+    ) {
       toast.error("Please select or type university name.", {
-        position: toast.POSITION.TOP_RIGHT,
+        position: toast.POSITION.TOP_CENTER,
         className: "toast-message",
       });
     }
 
+    // isSatCompleted(reading, math, writing)
+    // !isTransfer --> true
+    console.log(isStudentTransfer);
     setInstitution(universitiesList[0]);
   };
 
-  const handleChanged = (e) => {
-    const universityID = universitiesMap.get(institution);
-    if (
-      e.target.value === "no" &&
-      setSatScores(e.target.value) === null &&
-      universityID !== "000000"
-    ) {
-      toast.error("Please fill out SAT scores section.", {
-        position: toast.POSITION.TOP_RIGHT,
-        className: "toast-message",
-      });
+  const studentTransferStatus = (val) => {
+    setIsTransfer(val);
+    if (val === "yes") {
+      setIsStudentTransfer(true);
     }
-    setTransfer(e.target.value);
-    setSatScores(e.target.value);
-
-    // console.log(setSatScores(e.target.value));
   };
 
   return (
@@ -80,6 +80,7 @@ export default function App() {
       <Container>
         <Form onSubmit={submitHandler} className="col-md-6 form">
           <FormGroup>
+            <ToastContainer className="toast-position" />
             <FormLabel style={{ marginBottom: "1.5em" }}>
               Select your dream college
             </FormLabel>
@@ -101,6 +102,8 @@ export default function App() {
                 row
                 aria-labelledby="demo-row-radio-buttons-group-label"
                 name="row-radio-buttons-group"
+                value={isTransfer}
+                onChange={(e) => studentTransferStatus(e.target.value)}
               >
                 <FormControlLabel
                   value="yes"
@@ -119,53 +122,70 @@ export default function App() {
                 <FormLabel id="demo-row-radio-buttons-group-label">
                   What is your GPA?
                 </FormLabel>
-                <Form.Control type="number" step="0.1" min="0" max="4.0" />
+                <Form.Control
+                  required
+                  type="number"
+                  step="0.1"
+                  min="0"
+                  max="4.0"
+                  value={gpa}
+                  onChange={(e) => setGpa(parseFloat(e.target.value))}
+                />
               </Form.Group>
 
               {/*For no answer*/}
               <FormLabel id="demo-row-radio-buttons-group-label">
                 What is your SAT scores?
               </FormLabel>
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="formBasicSAT"
-                value={satScores}
-              >
+              <Form.Group as={Row} className="mb-3" controlId="formBasicSAT">
                 <Form.Label column sm="2">
                   Reading
                 </Form.Label>
                 <Col sm="10">
-                  <Form.Control type="number" step="0.1" min="200" max="800" />
+                  <Form.Control
+                    type="number"
+                    step="0.1"
+                    min="200"
+                    max="800"
+                    value={reading}
+                    onChange={(e) => setReading(parseFloat(e.target.value))}
+                  />
                 </Col>
                 <Form.Label column sm="2">
                   Math
                 </Form.Label>
                 <Col sm="10">
-                  <Form.Control type="number" step="0.1" min="200" max="800" />
+                  <Form.Control
+                    type="number"
+                    step="0.1"
+                    min="200"
+                    max="800"
+                    value={math}
+                    onChange={(e) => setMath(parseFloat(e.target.value))}
+                  />
                 </Col>
                 <Form.Label column sm="2">
                   Writing
                 </Form.Label>
                 <Col sm="10">
-                  <Form.Control type="number" step="0.1" min="200" max="800" />
+                  <Form.Control
+                    type="number"
+                    step="0.1"
+                    min="200"
+                    max="800"
+                    value={writing}
+                    onChange={(e) => setWriting(parseFloat(e.target.value))}
+                  />
                 </Col>
               </Form.Group>
             </FormControl>
             {/*Form control ends here*/}
           </FormGroup>
-          <Button
-            className="form-btn"
-            type="submit"
-            value={transfer}
-            onChange={handleChanged}
-          >
+          <Button className="form-btn" type="submit">
             see if you quality
           </Button>
         </Form>
       </Container>
-
-      <ToastContainer className="toast-position" />
     </div>
   );
 }
