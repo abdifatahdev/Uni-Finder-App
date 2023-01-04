@@ -12,6 +12,7 @@ import axios from 'axios';
 import './styles.css';
 import Hero from './hero';
 import universitiesMap from './universities';
+import NavigationBar from './navBar';
 
 let universitiesList = [...universitiesMap.keys()];
 
@@ -80,14 +81,16 @@ export default function App() {
 
   return (
     <div>
+      <NavigationBar />
       <Hero />
       <Container>
         <Form onSubmit={submitHandler} className='col-md-6 form'>
+          {/* ------- Toast Error section ------- */}
           <Toast
             bg={'danger'}
             onClose={() => setShowError(false)}
             show={showError}
-            delay={2000}
+            delay={3000}
             autohide
           >
             <Toast.Body className={'text-white w-auto'}>
@@ -96,6 +99,7 @@ export default function App() {
               ))}
             </Toast.Body>
           </Toast>
+          {/* ------- Toast Success section ------- */}
           <Toast
             bg={'success'}
             onClose={() => setShowSuccess(false)}

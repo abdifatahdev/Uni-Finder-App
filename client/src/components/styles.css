@@ -4,6 +4,10 @@ body {
   font-weight: 400;
 }
 
+.navbar {
+  background-color: #003049;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -14,11 +18,12 @@ body {
 
 .cta {
   background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.1)),
-    url('https://iftin-academy.s3.amazonaws.com/college_student2.jpg') no-repeat
-      right center;
+    url('https://university-finder.s3.amazonaws.com/college_student_hero.jpg')
+      no-repeat right center;
   /* background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("https://iftin-academy.s3.amazonaws.com/college-student.jpg") no-repeat right center; */
   background-size: cover;
-  height: 60vh;
+  background-position: center;
+  height: 55vh;
   width: 100%;
   display: flex;
   align-items: center;
@@ -27,7 +32,7 @@ body {
 }
 
 .cta h1 {
-  color: #fdc500;
+  color: #fdc402;
   margin-bottom: 20px;
   font-weight: 300;
   font-size: 2.5em;
@@ -46,30 +51,27 @@ body {
   text-transform: uppercase;
   font-size: 14px;
   font-weight: 500;
-  background-color: #00509d;
-  border-color: #00509d;
+  background-color: #003049;
+  border-color: #003049;
   color: #fff;
 }
 
 .form-btn:hover {
-  /*background-color: #003f88;*/
-  /*color: #fff;*/
-  /*border-color: #003f88;*/
   background-color: #fdc402;
   color: #000;
   border-color: #fdc402;
 }
 
 .form-btn:active {
-  background-color: #003f88 !important;
-  color: #fff !important;
-  border-color: #003f88 !important;
+  background-color: #fdc402 !important;
+  color: #000 !important;
+  border-color: #fdc402 !important;
 }
 
 .form-btn:focus {
-  background-color: #003f88 !important;
-  color: #fff !important;
-  border-color: #003f88 !important;
+  background-color: #fdc402 !important;
+  color: #000 !important;
+  border-color: #fdc402 !important;
   box-shadow: none;
 }
 
