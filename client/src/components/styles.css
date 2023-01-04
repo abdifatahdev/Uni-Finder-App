@@ -1,96 +1,90 @@
 body {
-    font-family: 'Roboto', sans-serif;
-    font-size: 1.1em;
-    font-weight: 400;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.1em;
+  font-weight: 400;
+}
+
+.navbar {
+  background-color: #003049;
 }
 
 .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex: 1;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+  align-items: center;
 }
 
 .cta {
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.1)),
-        url("https://iftin-academy.s3.amazonaws.com/college_student2.jpg") no-repeat right center;
-    /* background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("https://iftin-academy.s3.amazonaws.com/college-student.jpg") no-repeat right center; */
-    background-size: cover;
-    height: 60vh;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 80px;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.1)),
+    url('https://university-finder.s3.amazonaws.com/college_student_hero.jpg')
+      no-repeat right center;
+  /* background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("https://iftin-academy.s3.amazonaws.com/college-student.jpg") no-repeat right center; */
+  background-size: cover;
+  background-position: center;
+  height: 55vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 50px;
 }
 
 .cta h1 {
-    color: #fdc500;
-    margin-bottom: 20px;
-    font-weight: 300;
-    font-size: 2.5em;
+  color: #fdc402;
+  margin-bottom: 20px;
+  font-weight: 300;
+  font-size: 2.5em;
 }
 
 .cta p {
-    color: #fff;
-    font-size: 1.2em;
-    font-weight: 100;
+  color: #fff;
+  font-size: 1.2em;
+  font-weight: 100;
 }
 
 .form-btn {
-    padding: 15px 30px;
-    margin-top: 2em;
-    border-radius: 0%;
-    text-transform: uppercase;
-    font-size: 14px;
-    font-weight: 500;
-    background-color: #00509d;
-    border-color: #00509d;
-    color: #fff;
+  padding: 15px 30px;
+  margin-top: 4em;
+  border-radius: 0%;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 500;
+  background-color: #003049;
+  border-color: #003049;
+  color: #fff;
 }
 
 .form-btn:hover {
-    /*background-color: #003f88;*/
-    /*color: #fff;*/
-    /*border-color: #003f88;*/
-    background-color: #FDC402;
-    color: #000;
-    border-color: #FDC402;
+  background-color: #fdc402;
+  color: #000;
+  border-color: #fdc402;
 }
 
 .form-btn:active {
-    background-color: #003f88 !important;
-    color: #fff !important;
-    border-color: #003f88 !important;
+  background-color: #fdc402 !important;
+  color: #000 !important;
+  border-color: #fdc402 !important;
 }
 
 .form-btn:focus {
-    background-color: #003f88 !important;
-    color: #fff !important;
-    border-color: #003f88 !important;
-    box-shadow: none;
+  background-color: #fdc402 !important;
+  color: #000 !important;
+  border-color: #fdc402 !important;
+  box-shadow: none;
 }
 
 .edu-logo img {
-    width: 100px;
-    margin-top: 17em;
-    margin-right: 5em;
+  width: 100px;
+  margin-top: 17em;
+  margin-right: 5em;
 }
 
-.form{
-   margin-bottom: 50px;
-}
-#demo-row-radio-buttons-group-label{
-    margin-top: 20px;
+.form {
+  margin-bottom: 150px;
 }
 
-.toast-message{
-    width: 24vw;
-    margin-left: -80px;
-    padding: 20px 20px;
-}
-
-.toast-position{
-
+.toast.show {
+  min-width: 100% !important;
 }
