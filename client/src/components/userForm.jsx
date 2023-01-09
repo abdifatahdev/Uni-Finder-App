@@ -28,7 +28,7 @@ export default function App() {
     e.preventDefault();
 
     // array to capture all the errors
-    let errors = [];
+    let errors = []
 
     if (institution === '') {
       errors.push('Please select or search a university name');
@@ -45,16 +45,22 @@ export default function App() {
     if (math === '') {
       errors.push('Please enter your math SAT score');
     }
+
     // Set all the errors and show the toast
-    if (errors.length !== 0) {
+    if ((isTransfer == '' || isTransfer == 'no') && errors.length !== 0) {
       setUniFinderAppErrors(errors);
       setShowError(true);
       return;
     }
-
+    
     // There are no errors so show success toast
     setShowSuccess(true);
+    fetchData();
+    
+  };
 
+  // Fetch data from API
+  const fetchData = () =>{
     const universityId = universitiesMap.get(institution);
     const APIKey = 'weIg6spfiKIk0fC3wg5omar71jNfWG44FbgK5ghN';
     axios
@@ -63,7 +69,11 @@ export default function App() {
       .then((response) => console.log(JSON.stringify(response.data)))
       .catch((err) => console.log(err));
 
-    // Reset all the states
+    resetData();
+  };
+
+  // Reset all the states
+  const resetData = () => {
     setInstitution('');
     setIsTransfer('');
     setGpa('');
@@ -156,6 +166,7 @@ export default function App() {
           </Row>
 
           {/* ------- SAT section ------- */}
+          {/* Submitting SAT scores are optional if you are transfer student */}
           <Row className='mb-2'>
             <Form.Group as={Col}>
               <Form.Label>What are your SAT scores?</Form.Label>
