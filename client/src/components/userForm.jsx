@@ -11,15 +11,18 @@ import { Button, Col, Container, Form, Row, Toast } from 'react-bootstrap';
 import axios from 'axios';
 import './styles.css';
 import universitiesMap from './universities';
+import GpaForm from './GpaForm';
+import SatForm from './SatForm';
 
 let universitiesList = [...universitiesMap.keys()];
 
 export default function App() {
   const [institution, setInstitution] = useState('');
-  const [isTransfer, setIsTransfer] = useState('');
-  const [gpa, setGpa] = useState('');
-  const [readingWriting, setReadingWriting] = useState('');
-  const [math, setMath] = useState('');
+  const [isTransfer, setIsTransfer] = useState('yes');
+  console.log(isTransfer)
+  // const [gpa, setGpa] = useState('');
+  // const [readingWriting, setReadingWriting] = useState('');
+  // const [math, setMath] = useState('');
   const [uniFinderAppErrors, setUniFinderAppErrors] = useState([]);
   const [showError, setShowError] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -36,18 +39,18 @@ export default function App() {
     if (isTransfer === '') {
       errors.push('Please select whether you are transfer student or not');
     }
-    if (gpa === '') {
-      errors.push('Please enter your GPA');
-    }
-    if (readingWriting === '') {
-      errors.push('Please enter your reading + writing SAT score');
-    }
-    if (math === '') {
-      errors.push('Please enter your math SAT score');
-    }
+    // if (gpa === '') {
+    //   errors.push('Please enter your GPA');
+    // }
+    // if (readingWriting === '') {
+    //   errors.push('Please enter your reading + writing SAT score');
+    // }
+    // if (math === '') {
+    //   errors.push('Please enter your math SAT score');
+    // }
 
     // Set all the errors and show the toast
-    if ((isTransfer == '' || isTransfer == 'no') && errors.length !== 0) {
+    if ((isTransfer === '' || isTransfer === 'no') && errors.length !== 0) {
       setUniFinderAppErrors(errors);
       setShowError(true);
       return;
@@ -76,14 +79,15 @@ export default function App() {
   const resetData = () => {
     setInstitution('');
     setIsTransfer('');
-    setGpa('');
-    setReadingWriting('');
-    setMath('');
+    // setGpa('');
+    // setReadingWriting('');
+    // setMath('');
   };
 
   return (
     <div>
       <Container>
+      
         <Form onSubmit={submitHandler} className='col-md-6 form'>
           {/* ------- Toast Error section ------- */}
           <Toast
@@ -150,7 +154,7 @@ export default function App() {
           </Row>
 
           {/* ------- GPA section ------- */}
-          <Row className='mb-4'>
+          {/* <Row className='mb-4'>
             <Form.Group as={Col}>
               <Form.Label>What is your GPA?</Form.Label>
               <Form.Control
@@ -163,11 +167,21 @@ export default function App() {
                 onChange={(e) => setGpa(e.target.valueAsNumber)}
               />
             </Form.Group>
-          </Row>
+          </Row> */}
+
+
+         
+        
+
+
+          {isTransfer  === "no"  ?  <GpaForm></GpaForm> :  <SatForm></SatForm> }
+          {/* {isTransfer  &&    <SatForm></SatForm>} */}
+
+      
 
           {/* ------- SAT section ------- */}
           {/* Submitting SAT scores are optional if you are transfer student */}
-          <Row className='mb-2'>
+          {/* <Row className='mb-2'>
             <Form.Group as={Col}>
               <Form.Label>What are your SAT scores?</Form.Label>
             </Form.Group>
@@ -203,7 +217,7 @@ export default function App() {
                 onChange={(e) => setMath(e.target.valueAsNumber)}
               />
             </Col>
-          </Row>
+          </Row> */}
           {/* ------- SAT section ends here ------- */}
 
           <Button className='form-btn' type='submit'>
