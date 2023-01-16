@@ -47,7 +47,7 @@ export default function App() {
     }
 
     // Set all the errors and show the toast
-    if ((isTransfer == '' || isTransfer == 'no') && errors.length !== 0) {
+    if ((isTransfer === '' || isTransfer === 'no') && errors.length !== 0) {
       setUniFinderAppErrors(errors);
       setShowError(true);
       return;
