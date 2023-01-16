@@ -60,14 +60,31 @@ export default function App() {
   };
 
   // Fetch data from API
-  const fetchData = () =>{
-    const universityId = universitiesMap.get(institution);
-    const APIKey = 'weIg6spfiKIk0fC3wg5omar71jNfWG44FbgK5ghN';
+  const fetchData = () => {
+    let request = {
+      institutionId: parseInt(universitiesMap.get(institution)),
+      studentTransferStatus: isTransfer === "yes" ? true : false,
+      studentGpa: gpa,
+      studentReadingWritingScore: readingWriting,
+      studentMathScore: math
+    };
     axios
-      .get(
-        `https://api.data.gov/ed/collegescorecard/v1/schools.json?id=${universityId}&fields=school.name,2020.student.size&api_key=${APIKey}`)
-      .then((response) => console.log(JSON.stringify(response.data)))
-      .catch((err) => console.log(err));
+      .post("/user-details", JSON.stringify(request), {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          console.log("successfully posted to the server!!");
+        } else {
+          console.log("it wasn't successful");
+        }
+      })
+      .catch((err) => {
+        console.log(err.response.request._response);
+      });
+    console.log(JSON.stringify(request));
 
     resetData();
   };
