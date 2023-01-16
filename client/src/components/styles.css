@@ -88,3 +88,9 @@ body {
 .toast.show {
   min-width: 100% !important;
 }
+
+.sat-span{
+  font-style: italic;
+  font-weight:300;
+  margin-bottom: 10px;
+}

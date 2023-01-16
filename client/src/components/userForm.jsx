@@ -166,9 +166,11 @@ export default function App() {
           </Row>
 
           {/* ------- SAT section ------- */}
-          {/* Submitting SAT scores are optional if you are transfer student */}
           <Row className='mb-2'>
             <Form.Group as={Col}>
+              <div className='sat-span'>
+              <span>Note: submitting SAT scores are optional if you are transfer student</span>
+              </div>
               <Form.Label>What are your SAT scores?</Form.Label>
             </Form.Group>
           </Row>
