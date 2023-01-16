@@ -36,7 +36,7 @@ export default function App() {
     if (isTransfer === '') {
       errors.push('Please select whether you are transfer student or not');
     }
-    if (gpa === '') {
+    if (gpa === '' || Number.isNaN(gpa)) {
       errors.push('Please enter your GPA');
     }
     if (readingWriting === '') {
