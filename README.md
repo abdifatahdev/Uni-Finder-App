@@ -4,7 +4,7 @@
 
 <img width="100" alt="collegescorecard_api" src="https://collegescorecard.ed.gov/img/US-DeptOfEducation-Seal.png">
 
-<img width="100" alt="collegescorecard_api" src="[https://ibb.co/HX782Fw](https://edprepmatters.net/wp-content/uploads/2019/12/college-scorecard-e1575400246380.png)">
+<img width="100" alt="collegescorecard" src="https://edprepmatters.net/wp-content/uploads/2019/12/college-scorecard-e1575400246380.png">
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
