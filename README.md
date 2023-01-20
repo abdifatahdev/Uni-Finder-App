@@ -4,7 +4,7 @@
 
 <img width="100" alt="collegescorecard_api" src="https://collegescorecard.ed.gov/img/US-DeptOfEducation-Seal.png">
 
-<img width="100" alt="collegescorecard_api" src="/Users/abdifatahdev/Desktop/Full-Stack-Apps/Uni-Finder-App/client/src/assets/images/collegescorecardapi.png">
+<img width="100" alt="collegescorecard_api" src="/client/src/assets/images/collegescorecardapi.png">
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
