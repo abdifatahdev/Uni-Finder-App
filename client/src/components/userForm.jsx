@@ -183,10 +183,6 @@ export default function App() {
           </Row>
 
           {/* ------- SAT section ------- */}
-
-          {/* Hide SAT Scores section when user chooses 'yes' isTransfer radio */}
-          {isTransfer !== 'yes' && (
-          <div className='sat-score'>
           <Row className='mb-2'>
             <Form.Group as={Col}>
               <div className='sat-span'>
@@ -227,8 +223,6 @@ export default function App() {
               />
             </Col>
           </Row>
-          </div>
-          )}
           {/* ------- SAT section ends here ------- */}
           <Button className='form-btn' type='submit'>
             see if you quality
