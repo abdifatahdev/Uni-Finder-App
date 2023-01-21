@@ -15,6 +15,7 @@ import universitiesMap from './universities';
 let universitiesList = [...universitiesMap.keys()];
 
 export default function App() {
+  const [name, setName] = useState('');
   const [institution, setInstitution] = useState('');
   const [isTransfer, setIsTransfer] = useState('');
   const [gpa, setGpa] = useState('');
@@ -30,6 +31,9 @@ export default function App() {
     // array to capture all the errors
     let errors = []
 
+    if (name === '') {
+      errors.push('Please enter your name');
+    }
     if (institution === '') {
       errors.push('Please select or search a university name');
     }
@@ -62,6 +66,7 @@ export default function App() {
   // Fetch data from API
   const fetchData = () => {
     let request = {
+      studentName: name,
       institutionId: parseInt(universitiesMap.get(institution)),
       studentTransferStatus: isTransfer === "yes" ? true : false,
       studentGpa: gpa,
@@ -91,6 +96,7 @@ export default function App() {
 
   // Reset all the states
   const resetData = () => {
+    setName('');
     setInstitution('');
     setIsTransfer('');
     setGpa('');
@@ -132,6 +138,21 @@ export default function App() {
           {/* ------- Autocomplete section ------- */}
           <Row className='mb-4'>
             <Form.Group as={Col}>
+            <Form.Group controlId="name">
+              <Row>
+                <Col md={3}>
+                  <Form.Label style={{whiteSpace: 'nowrap', marginBottom: '1.5em'}} >Enter your Name:</Form.Label>
+                </Col>
+                <Col md={8}>
+                  <Form.Control style={{marginLeft: '2em'}}
+                    type="text"
+                    placeholder="Enter your name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </Col>
+              </Row>
+            </Form.Group>
               <Form.Label style={{ marginBottom: '1.5em' }}>
                 Select your dream college
               </Form.Label>
