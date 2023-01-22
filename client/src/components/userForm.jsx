@@ -1,26 +1,26 @@
-import React, { useState } from 'react';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useState } from "react";
+import "react-toastify/dist/ReactToastify.css";
 import {
   TextField,
   Autocomplete,
   RadioGroup,
   FormControlLabel,
   Radio,
-} from '@mui/material';
-import { Button, Col, Container, Form, Row, Toast } from 'react-bootstrap';
-import axios from 'axios';
-import './styles.css';
-import universitiesMap from './universities';
+} from "@mui/material";
+import { Button, Col, Container, Form, Row, Toast } from "react-bootstrap";
+import axios from "axios";
+import "./styles.css";
+import universitiesMap from "./universities";
 
 let universitiesList = [...universitiesMap.keys()];
 
 export default function App() {
-  const [name, setName] = useState('');
-  const [institution, setInstitution] = useState('');
-  const [isTransfer, setIsTransfer] = useState('');
-  const [gpa, setGpa] = useState('');
-  const [readingWriting, setReadingWriting] = useState('');
-  const [math, setMath] = useState('');
+  const [studentName, setStudentName] = useState("");
+  const [institution, setInstitution] = useState("");
+  const [isTransfer, setIsTransfer] = useState("");
+  const [gpa, setGpa] = useState("");
+  const [readingWriting, setReadingWriting] = useState("");
+  const [math, setMath] = useState("");
   const [uniFinderAppErrors, setUniFinderAppErrors] = useState([]);
   const [showError, setShowError] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -29,49 +29,48 @@ export default function App() {
     e.preventDefault();
 
     // array to capture all the errors
-    let errors = []
+    let errors = [];
 
-    if (name === '') {
-      errors.push('Please enter your name');
+    if (studentName === "" || studentName === null) {
+      errors.push("Please enter your name");
     }
-    if (institution === '') {
-      errors.push('Please select or search a university name');
+    if (institution === "" || institution === null) {
+      errors.push("Please select or search a university name");
     }
-    if (isTransfer === '') {
-      errors.push('Please select whether you are transfer student or not');
+    if (isTransfer === "") {
+      errors.push("Please select whether you are transfer student or not");
     }
-    if (gpa === '') {
-      errors.push('Please enter your GPA');
+    if (gpa === "" || Number.isNaN(gpa)) {
+      errors.push("Please enter your GPA");
     }
-    if (readingWriting === '') {
-      errors.push('Please enter your reading + writing SAT score');
+    if (readingWriting === "" || Number.isNaN(readingWriting)) {
+      errors.push("Please enter your reading + writing SAT score");
     }
-    if (math === '') {
-      errors.push('Please enter your math SAT score');
+    if (math === "" || Number.isNaN(math)) {
+      errors.push("Please enter your math SAT score");
     }
 
     // Set all the errors and show the toast
-    if ((isTransfer === '' || isTransfer === 'no') && errors.length !== 0) {
+    if ((isTransfer === "" || isTransfer === "no") && errors.length !== 0) {
       setUniFinderAppErrors(errors);
       setShowError(true);
       return;
     }
-    
+
     // There are no errors so show success toast
     setShowSuccess(true);
     fetchData();
-    
   };
 
   // Fetch data from API
   const fetchData = () => {
     let request = {
-      studentName: name,
+      studentName: studentName,
       institutionId: parseInt(universitiesMap.get(institution)),
       studentTransferStatus: isTransfer === "yes" ? true : false,
       studentGpa: gpa,
       studentReadingWritingScore: readingWriting,
-      studentMathScore: math
+      studentMathScore: math,
     };
     axios
       .post("/user-details", JSON.stringify(request), {
@@ -96,27 +95,27 @@ export default function App() {
 
   // Reset all the states
   const resetData = () => {
-    setName('');
-    setInstitution('');
-    setIsTransfer('');
-    setGpa('');
-    setReadingWriting('');
-    setMath('');
+    setStudentName("");
+    setInstitution("");
+    setIsTransfer("");
+    setGpa("");
+    setReadingWriting("");
+    setMath("");
   };
 
   return (
     <div>
       <Container>
-        <Form onSubmit={submitHandler} className='col-md-6 form'>
+        <Form onSubmit={submitHandler} className="col-md-6 form">
           {/* ------- Toast Error section ------- */}
           <Toast
-            bg={'danger'}
+            bg={"danger"}
             onClose={() => setShowError(false)}
             show={showError}
             delay={3000}
             autohide
           >
-            <Toast.Body className={'text-white w-auto'}>
+            <Toast.Body className={"text-white w-auto"}>
               {uniFinderAppErrors.map((error, index) => (
                 <li key={index}>{error}</li>
               ))}
@@ -124,128 +123,124 @@ export default function App() {
           </Toast>
           {/* ------- Toast Success section ------- */}
           <Toast
-            bg={'success'}
+            bg={"success"}
             onClose={() => setShowSuccess(false)}
             show={showSuccess}
             delay={2000}
             autohide
           >
-            <Toast.Body className={'text-white w-auto'}>
+            <Toast.Body className={"text-white w-auto"}>
               Form submitted successfully!
             </Toast.Body>
           </Toast>
 
+          {/* ------- First name & last name section ------- */}
+          <Form.Group className="mb-3" controlId="formGridAddress1">
+            <Form.Label>Enter your name</Form.Label>
+            <Form.Control
+              placeholder="First and last name"
+              value={studentName}
+              onChange={(e) => setStudentName(e.target.value)}
+            />
+          </Form.Group>
+
           {/* ------- Autocomplete section ------- */}
-          <Row className='mb-4'>
+          <Row className="mb-4" style={{ marginTop: "2em" }}>
             <Form.Group as={Col}>
-            <Form.Group controlId="name">
-              <Row>
-                <Col md={3}>
-                  <Form.Label style={{whiteSpace: 'nowrap', marginBottom: '1.5em'}} >Enter your Name:</Form.Label>
-                </Col>
-                <Col md={8}>
-                  <Form.Control style={{marginLeft: '2em'}}
-                    type="text"
-                    placeholder="Enter your name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </Col>
-              </Row>
-            </Form.Group>
-              <Form.Label style={{ marginBottom: '1.5em' }}>
-                Select your dream college
-              </Form.Label>
+              <Form.Label>Select your dream college</Form.Label>
               <Autocomplete
                 options={universitiesList}
                 value={institution}
                 onChange={(_, v) => setInstitution(v)}
                 renderInput={(params) => (
-                  <TextField {...params} label='Select a university' />
+                  <TextField {...params} label="Select a university" />
                 )}
                 isOptionEqualToValue={(option, value) =>
-                  value === undefined || value === '' || option.id === value.id
+                  value === undefined || value === "" || option.id === value.id
                 }
               />
             </Form.Group>
           </Row>
 
           {/* ------- Transfer section ------- */}
-          <Row className='mb-4'> 
+          <Row className="mb-3">
             <Form.Group as={Col}>
               <Form.Label>Are you transfer student?</Form.Label>
               <RadioGroup
                 row
-                aria-labelledby='demo-row-radio-buttons-group-label'
-                name='row-radio-buttons-group'
+                aria-labelledby="demo-row-radio-buttons-group-label"
+                name="row-radio-buttons-group"
                 value={isTransfer}
                 onChange={(e) => setIsTransfer(e.target.value)}
               >
-                <FormControlLabel value='yes' control={<Radio />} label='Yes' />
-                <FormControlLabel value='no' control={<Radio />} label='No' />
+                <FormControlLabel value="yes" control={<Radio />} label="Yes" />
+                <FormControlLabel value="no" control={<Radio />} label="No" />
               </RadioGroup>
             </Form.Group>
           </Row>
 
           {/* ------- GPA section ------- */}
-          <Row className='mb-4'>
+          <Row className="mb-4">
             <Form.Group as={Col}>
               <Form.Label>What is your GPA?</Form.Label>
               <Form.Control
-                type='number'
-                step='0.1'
+                type="number"
+                step="0.1"
                 min={0.0}
                 max={4.0}
-                placeholder={'Enter your GPA'}
-                value={gpa || ''}
+                placeholder={"Enter your GPA"}
+                value={gpa || ""}
                 onChange={(e) => setGpa(e.target.valueAsNumber)}
               />
             </Form.Group>
           </Row>
 
           {/* ------- SAT section ------- */}
-          <Row className='mb-2'>
+          <Row className="mb-2">
             <Form.Group as={Col}>
-              <div className='sat-span'>
-              <span>Note: submitting SAT scores are optional if you are transfer student</span>
+              <div className="sat-span">
+                <span>
+                  Note: submitting SAT scores are optional if you are transfer
+                  student
+                </span>
               </div>
               <Form.Label>What are your SAT scores?</Form.Label>
             </Form.Group>
           </Row>
-          <Row className='mb-2'>
-            <Col xs lg='4'>
+          <Row className="mb-2">
+            <Col xs lg="4">
               <Form.Label>Reading + writing</Form.Label>
             </Col>
             <Col>
               <Form.Control
-                type='number'
-                step='0.1'
+                type="number"
+                step="0.1"
                 min={200.0}
                 max={800.0}
-                placeholder={'Enter reading + writing score'}
-                value={readingWriting || ''}
+                placeholder={"Enter reading + writing score"}
+                value={readingWriting || ""}
                 onChange={(e) => setReadingWriting(e.target.valueAsNumber)}
               />
             </Col>
           </Row>
           <Row>
-            <Col xs lg='4'>
+            <Col xs lg="4">
               <Form.Label>Math</Form.Label>
             </Col>
             <Col>
               <Form.Control
-                type='number'
-                step='0.1'
+                type="number"
+                step="0.1"
                 min={200.0}
                 max={800.0}
-                placeholder={'Enter math score'}
-                value={math || ''}
+                placeholder={"Enter math score"}
+                value={math || ""}
                 onChange={(e) => setMath(e.target.valueAsNumber)}
               />
             </Col>
           </Row>
           {/* ------- SAT section ends here ------- */}
-          <Button className='form-btn' type='submit'>
+          <Button className="form-btn" type="submit">
             see if you quality
           </Button>
         </Form>
