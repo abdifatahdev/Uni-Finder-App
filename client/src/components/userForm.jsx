@@ -11,11 +11,14 @@ import { Button, Col, Container, Form, Row, Toast } from "react-bootstrap";
 import axios from "axios";
 import "./styles.css";
 import universitiesMap from "./universities";
+import states from "./states";
 
 let universitiesList = [...universitiesMap.keys()];
+let statesList = [...states];
 
 export default function App() {
   const [studentName, setStudentName] = useState("");
+  const [studentResidenceState, setStudentResidenceState] = useState("");
   const [institution, setInstitution] = useState("");
   const [isTransfer, setIsTransfer] = useState("");
   const [gpa, setGpa] = useState("");
@@ -33,6 +36,9 @@ export default function App() {
 
     if (studentName === "" || studentName === null) {
       errors.push("Please enter your name");
+    }
+    if (studentResidenceState === "" || studentResidenceState === null) {
+      errors.push("Please enter your state of residence");
     }
     if (institution === "" || institution === null) {
       errors.push("Please select or search a university name");
@@ -66,7 +72,8 @@ export default function App() {
   const fetchData = () => {
     let request = {
       studentName: studentName,
-      institutionId: parseInt(universitiesMap.get(institution)),
+      studentResidenceState: studentResidenceState,
+      institutionId: universitiesMap.get(institution),
       studentTransferStatus: isTransfer === "yes" ? true : false,
       studentGpa: gpa,
       studentReadingWritingScore: readingWriting,
@@ -96,6 +103,7 @@ export default function App() {
   // Reset all the states
   const resetData = () => {
     setStudentName("");
+    setStudentResidenceState("");
     setInstitution("");
     setIsTransfer("");
     setGpa("");
@@ -144,7 +152,25 @@ export default function App() {
             />
           </Form.Group>
 
-          {/* ------- Autocomplete section ------- */}
+          {/* ------- Student's state of residence autocomplete section ------- */}
+          <Row className="mb-4" style={{ marginTop: "2em" }}>
+            <Form.Group as={Col}>
+              <Form.Label>State</Form.Label>
+              <Autocomplete
+                options={statesList}
+                value={studentResidenceState}
+                onChange={(_, v) => setStudentResidenceState(v)}
+                renderInput={(params) => (
+                  <TextField {...params} label="Select state" />
+                )}
+                isOptionEqualToValue={(option, value) =>
+                  value === undefined || value === "" || option.id === value.id
+                }
+              />
+            </Form.Group>
+          </Row>
+
+          {/* ------- Select University autocomplete section ------- */}
           <Row className="mb-4" style={{ marginTop: "2em" }}>
             <Form.Group as={Col}>
               <Form.Label>Select your dream college</Form.Label>
