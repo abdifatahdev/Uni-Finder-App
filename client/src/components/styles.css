@@ -5,7 +5,7 @@ body {
 }
 
 .navbar {
-  background-color: #003049;
+  background-color: #09355d;
 }
 
 .container {
@@ -47,12 +47,12 @@ body {
 .form-btn {
   padding: 15px 30px;
   margin-top: 4em;
-  border-radius: 0%;
+  border-radius: 25px;
   text-transform: uppercase;
   font-size: 14px;
   font-weight: 500;
-  background-color: #003049;
-  border-color: #003049;
+  background-color: #09355d;
+  border-color: #09355d;
   color: #fff;
 }
 
@@ -94,4 +94,60 @@ body {
   font-size: 16px;
   font-weight:300;
   margin-bottom: 10px;
+  color: #003049;
+}
+
+footer {
+  background-color: #09355d !important;
+  font-size: 16px;
+  color: #fff;
+}
+
+.footer-upper {
+  background-color: #0B4275 !important;
+  width: auto;
+  min-width: 100%;
+  padding: 20px 0px 5px 0px;
+  color: #fff;
+}
+
+.footer-upper span {
+  margin-right: 0.7em;
+}
+
+.footer-upper a:hover {
+  text-decoration: none;
+}
+
+.footer-btn {
+  background-color: transparent !important;
+  border-radius: 25px;
+  font-weight: 500;
+  border-color: #fff;
+  border-width: 2px;
+  padding: 3px 20px;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.footer-btn:hover {
+  border-color: #fff !important;
+  background-color: #fff !important;
+  color: #000 !important;
+}
+
+.footer-btn:focus { 
+  border-color: #fff !important;
+  background-color: #fff !important;
+  color: #000 !important;
+}
+
+.footer-btn:active { 
+  border-color: #fff !important;
+  background-color: #fff !important;
+  color: #000 !important;
+}
+
+.footer-lower a {
+  color: #fdc402 !important;
 }
