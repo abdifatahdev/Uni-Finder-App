@@ -10,7 +10,7 @@ import {
 import { Button, Col, Container, Form, Row, Toast } from "react-bootstrap";
 import axios from "axios";
 import "./styles.css";
-import universitiesMap from "./universities";
+import universitiesMap from "./collegeScoreCardUniversities";
 import states from "./states";
 
 let universitiesList = [...universitiesMap.keys()];
@@ -49,6 +49,19 @@ export default function App() {
     if (gpa === "" || Number.isNaN(gpa)) {
       errors.push("Please enter your GPA");
     }
+
+    const isTransferPredicate = isTransfer === "yes";
+    const isGpaPredicate = gpa !== "" && !Number.isNaN(gpa);
+    // It is optional for transfer student to not submit the SAT scores
+    // so they are able to submit the form
+    if (isTransferPredicate && isGpaPredicate && errors.length === 0) {
+      setShowSuccess(true);
+      sendDataToBackend();
+      resetAllStates();
+      return;
+    }
+
+    // Handle rest of the errors
     if (readingWriting === "" || Number.isNaN(readingWriting)) {
       errors.push("Please enter your reading + writing SAT score");
     }
@@ -56,8 +69,8 @@ export default function App() {
       errors.push("Please enter your math SAT score");
     }
 
-    // Set all the errors and show the toast
-    if ((isTransfer === "" || isTransfer === "no") && errors.length !== 0) {
+    // If there are errors display them
+    if (errors.length > 0) {
       setUniFinderAppErrors(errors);
       setShowError(true);
       return;
@@ -65,11 +78,14 @@ export default function App() {
 
     // There are no errors so show success toast
     setShowSuccess(true);
-    fetchData();
+    // Send the data to backend
+    sendDataToBackend();
+    // Reset all useStates
+    resetAllStates();
   };
 
-  // Fetch data from API
-  const fetchData = () => {
+  // Send data to the backend node
+  const sendDataToBackend = () => {
     let request = {
       studentName: studentName,
       studentResidenceState: studentResidenceState,
@@ -96,12 +112,10 @@ export default function App() {
         console.log(err.response.request._response);
       });
     console.log(JSON.stringify(request));
-
-    resetData();
   };
 
   // Reset all the states
-  const resetData = () => {
+  const resetAllStates = () => {
     setStudentName("");
     setStudentResidenceState("");
     setInstitution("");
@@ -143,7 +157,7 @@ export default function App() {
           </Toast>
 
           {/* ------- First name & last name section ------- */}
-          <Form.Group className="mb-3" controlId="formGridAddress1">
+          <Form.Group className="mb-3">
             <Form.Label>Enter your name</Form.Label>
             <Form.Control
               placeholder="First and last name"
@@ -152,88 +166,80 @@ export default function App() {
             />
           </Form.Group>
 
-          {/* ------- Student's state of residence autocomplete section ------- */}
-          <Row className="mb-4" style={{ marginTop: "2em" }}>
-            <Form.Group as={Col}>
-              <Form.Label>State</Form.Label>
-              <Autocomplete
-                options={statesList}
-                value={studentResidenceState}
-                onChange={(_, v) => setStudentResidenceState(v)}
-                renderInput={(params) => (
-                  <TextField {...params} label="Select state" />
-                )}
-                isOptionEqualToValue={(option, value) =>
-                  value === undefined || value === "" || option.id === value.id
-                }
-              />
-            </Form.Group>
-          </Row>
+          {/* ------- Select state autocomplete section ------- */}
+          <Form.Group className="mb-3" style={{ marginTop: "1.5em" }}>
+            <Form.Label>Select your state of residency</Form.Label>
+            <Autocomplete
+              options={statesList}
+              size="small"
+              value={studentResidenceState}
+              onChange={(_, v) => setStudentResidenceState(v)}
+              renderInput={(params) => (
+                <TextField {...params} label="Select state" />
+              )}
+              isOptionEqualToValue={(option, value) =>
+                value === undefined || value === "" || option.id === value.id
+              }
+            />
+          </Form.Group>
 
           {/* ------- Select University autocomplete section ------- */}
-          <Row className="mb-4" style={{ marginTop: "2em" }}>
-            <Form.Group as={Col}>
-              <Form.Label>Select your dream college</Form.Label>
-              <Autocomplete
-                options={universitiesList}
-                value={institution}
-                onChange={(_, v) => setInstitution(v)}
-                renderInput={(params) => (
-                  <TextField {...params} label="Select a university" />
-                )}
-                isOptionEqualToValue={(option, value) =>
-                  value === undefined || value === "" || option.id === value.id
-                }
-              />
-            </Form.Group>
-          </Row>
+          <Form.Group className="mb-3" style={{ marginTop: "1.5em" }}>
+            <Form.Label>Select your dream college</Form.Label>
+            <Autocomplete
+              options={universitiesList}
+              size="small"
+              value={institution}
+              onChange={(_, v) => setInstitution(v)}
+              renderInput={(params) => (
+                <TextField {...params} label="Select a university" />
+              )}
+              isOptionEqualToValue={(option, value) =>
+                value === undefined || value === "" || option.id === value.id
+              }
+            />
+          </Form.Group>
 
           {/* ------- Transfer section ------- */}
-          <Row className="mb-3">
-            <Form.Group as={Col}>
-              <Form.Label>Are you transfer student?</Form.Label>
-              <RadioGroup
-                row
-                aria-labelledby="demo-row-radio-buttons-group-label"
-                name="row-radio-buttons-group"
-                value={isTransfer}
-                onChange={(e) => setIsTransfer(e.target.value)}
-              >
-                <FormControlLabel value="yes" control={<Radio />} label="Yes" />
-                <FormControlLabel value="no" control={<Radio />} label="No" />
-              </RadioGroup>
-            </Form.Group>
-          </Row>
+          <Form.Group className="mb-3" style={{ marginTop: "1.5em" }}>
+            <Form.Label>Are you transfer student?</Form.Label>
+            <RadioGroup
+              row
+              aria-labelledby="demo-row-radio-buttons-group-label"
+              name="row-radio-buttons-group"
+              value={isTransfer}
+              onChange={(e) => setIsTransfer(e.target.value)}
+            >
+              <FormControlLabel value="yes" control={<Radio />} label="Yes" />
+              <FormControlLabel value="no" control={<Radio />} label="No" />
+            </RadioGroup>
+          </Form.Group>
 
           {/* ------- GPA section ------- */}
-          <Row className="mb-4">
-            <Form.Group as={Col}>
-              <Form.Label>What is your GPA?</Form.Label>
-              <Form.Control
-                type="number"
-                step="0.1"
-                min={0.0}
-                max={4.0}
-                placeholder={"Enter your GPA"}
-                value={gpa || ""}
-                onChange={(e) => setGpa(e.target.valueAsNumber)}
-              />
-            </Form.Group>
-          </Row>
+          <Form.Group className="mb-3" style={{ marginTop: "-5px" }}>
+            <Form.Label>What is your GPA?</Form.Label>
+            <Form.Control
+              type="number"
+              step="0.1"
+              min={0.0}
+              max={4.0}
+              placeholder={"Enter your GPA"}
+              value={gpa || ""}
+              onChange={(e) => setGpa(e.target.valueAsNumber)}
+            />
+          </Form.Group>
 
           {/* ------- SAT section ------- */}
-          <Row className="mb-2">
-            <Form.Group as={Col}>
-              <div className="sat-span">
-                <span>
-                  Note: submitting SAT scores are optional if you are transfer
-                  student
-                </span>
-              </div>
-              <Form.Label>What are your SAT scores?</Form.Label>
-            </Form.Group>
-          </Row>
-          <Row className="mb-2">
+          <Form.Group className="mb-3" style={{ marginTop: "1.5em" }}>
+            <div className="sat-span">
+              <span>
+                Note: submitting SAT scores are optional if you are transfer
+                student
+              </span>
+            </div>
+            <Form.Label>What are your SAT scores?</Form.Label>
+          </Form.Group>
+          <Row className="mb-2" style={{ marginTop: "-10px" }}>
             <Col xs lg="4">
               <Form.Label>Reading + writing</Form.Label>
             </Col>
@@ -265,7 +271,7 @@ export default function App() {
               />
             </Col>
           </Row>
-          {/* ------- SAT section ends here ------- */}
+
           <Button className="form-btn" type="submit">
             see if you quality
           </Button>

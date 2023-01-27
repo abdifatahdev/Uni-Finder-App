@@ -1,8 +1,8 @@
-import './styles.css';
-import Hero from './hero';
-import NavigationBar from './navBar';
-import UserForm from './userForm';
-
+import "./styles.css";
+import Hero from "./hero";
+import NavigationBar from "./navBar";
+import UserForm from "./userForm";
+import Footer from "./footer";
 
 export default function App() {
   return (
@@ -10,6 +10,7 @@ export default function App() {
       <NavigationBar />
       <Hero />
       <UserForm />
+      <Footer />
     </div>
   );
 }

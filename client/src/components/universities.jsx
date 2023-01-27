@@ -1451,7 +1451,7 @@ const universityMap = new Map([
   ["Yeshiva Karlin Stolin", 1525],
   ["Yeshiva Shaar Hatorah", 1526],
   ["Yeshiva Shaarei Torah of Rockland", 1527],
-  ["York College", 1528]
+  ["York College", 1528],
 ]);
 
 // console.log(universityMap.size);
