@@ -23,7 +23,7 @@ const Footer = () => (
     </Container>
     <div className="text-center p-3 footer-lower">
       ©2023 Copyright{" | "}
-      <a href="#">unifinder.com</a> {" | "} All Rights Reserved.
+      <a href={() => false}>unifinder.com</a> {" | "} All Rights Reserved.
     </div>
   </footer>
 );
