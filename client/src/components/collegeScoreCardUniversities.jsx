@@ -6832,5 +6832,4 @@ const universitiesMap = new Map([
   ["Pennsylvania State University-Penn State Brandywine", "49576723"],
 ]);
 
-
 export default universitiesMap;
