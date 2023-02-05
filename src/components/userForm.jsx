@@ -225,6 +225,7 @@ export default function App() {
               max={4.0}
               placeholder={"Enter your GPA"}
               value={gpa || ""}
+              inputMode={"numeric"}
               onChange={(e) => setGpa(e.target.valueAsNumber)}
             />
           </Form.Group>
@@ -249,6 +250,7 @@ export default function App() {
                 step="0.1"
                 min={200.0}
                 max={800.0}
+                inputMode={"numeric"}
                 placeholder={"Enter reading + writing score"}
                 value={readingWriting || ""}
                 onChange={(e) => setReadingWriting(e.target.valueAsNumber)}
@@ -265,6 +267,7 @@ export default function App() {
                 step="0.1"
                 min={200.0}
                 max={800.0}
+                inputMode={"numeric"}
                 placeholder={"Enter math score"}
                 value={math || ""}
                 onChange={(e) => setMath(e.target.valueAsNumber)}

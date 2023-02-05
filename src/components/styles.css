@@ -1,11 +1,40 @@
 body {
   font-family: 'Roboto', sans-serif;
-  font-size: 1.1em;
+  font-size: 16px;
   font-weight: 400;
+}
+
+input[type="color"],
+input[type="date"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="email"],
+input[type="month"],
+input[type="number"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="text"],
+input[type="time"],
+input[type="url"],
+input[type="week"],
+select:focus,
+textarea {
+  font-size: 16px;
 }
 
 .navbar {
   background-color: #09355d;
+}
+
+.container {
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+.container::-webkit-scrollbar { /* WebKit */
+  width: 0;
+  height: 0;
 }
 
 .container {
@@ -41,7 +70,7 @@ body {
 .cta p {
   color: #fff;
   font-size: 1.2em;
-  font-weight: 100;
+  font-weight: 300;
 }
 
 .form-btn {
@@ -73,12 +102,6 @@ body {
   color: #000 !important;
   border-color: #fdc402 !important;
   box-shadow: none;
-}
-
-.edu-logo img {
-  width: 100px;
-  margin-top: 17em;
-  margin-right: 5em;
 }
 
 .form {

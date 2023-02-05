@@ -44,3 +44,5 @@
 
 /java-grpc-server/target
 /java-grpc-server/.idea
+node_modules
+node_modules
